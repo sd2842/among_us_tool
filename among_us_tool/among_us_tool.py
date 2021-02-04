@@ -244,6 +244,57 @@ class Scribble:
         else:
             self.canvas.create_image(event.x, event.y, image = self.sabo_img)
     
+    #MAPの切り替え
+    def SKELD(self):
+        img = Image.open('SKELD_MAP_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.3)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+    def MIRA(self):
+        img = Image.open('MIRA_HQ_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.15)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+    def POLUS(self):
+        img = Image.open('POLUS_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.15)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+    
+    def SKELDe(self):
+        img = Image.open('SKELD_easy_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.3)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+    def MIRAe(self):
+        img = Image.open('MIRA_HQ_easy_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.3)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+    def POLUSe(self):
+        img = Image.open('POLUS_easy_half.png')
+        bg_white = Image.new('RGB', img.size, (255,255,255))
+        img = Image.blend(img, bg_white, 0.3)
+
+        self.tkimg = ImageTk.PhotoImage(img)
+        self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+
+    
     
         
 
@@ -320,6 +371,7 @@ class Scribble:
 
             yy = 590
 
+            #CREWのボタン設定
             white_button = tkinter.Button(window, text = "white", command = white, image = self.white_img)
             white_button.place(x = 0, y = yy)
             
@@ -371,9 +423,30 @@ class Scribble:
                                  bd = 5, relief = tkinter.RIDGE,cursor = "dot",
                                  width = img_width, height = img_height + blank)                             
         self.canvas.place(x = 0, y= 0)
+
+        #ボタンセット
         quit_button = tkinter.Button(window, text = "終了  Ctrl+C",
                                  command = window.quit, width = 20)
         quit_button.place(x = 1044, y = 606)
+        skeld_button = tkinter.Button(window, text = "SKELD",
+                                 command = self.SKELD, width = 20)
+        skeld_button.place(x = 1200, y = 0, width = 70)
+        mira_button = tkinter.Button(window, text = "MIRA HQ",
+                                 command = self.MIRA, width = 20)
+        mira_button.place(x = 1200, y = 55, width = 70)
+        polus_button = tkinter.Button(window, text = "POLUS",
+                                 command = self.POLUS, width = 20)
+        polus_button.place(x = 1200, y = 110, width = 70)
+        skeld_ea_button = tkinter.Button(window, text = "SKELD2",
+                                 command = self.SKELDe, width = 20)
+        skeld_ea_button.place(x = 1200, y = 25, width = 70)
+        mira_ea_button = tkinter.Button(window, text = "MIRA HQ2",
+                                 command = self.MIRAe, width = 20)
+        mira_ea_button.place(x = 1200, y = 80, width = 70)
+        polus_ea_button = tkinter.Button(window, text = "POLUS2",
+                                 command = self.POLUSe, width = 20)
+        polus_ea_button.place(x = 1200, y = 135, width = 70)
+        
         
         
         self.VSflame = tkinter.LabelFrame(window, text = "グレー", 
@@ -403,19 +476,23 @@ class Scribble:
         self.explain = tkinter.Label(text = " キー入力", font = ("arial", 10))
         self.explain2 = tkinter.Label(text = " A= admin  S= security  R= report", font = ("arial", 10))
         self.explain3 = tkinter.Label(text = " V= vent     X= kill    B= sabotage", font = ("arial", 10))
+        self.explain4 = tkinter.Label(text = "Project by @amongus_tsuna (twitter)", font = ("arial", 10))
         self.explain.place(x = 800, y = 590)
         self.explain2.place(x = 800, y = 610)
         self.explain3.place(x = 800, y = 630)
+        self.explain4.place(x = 2, y = 630)
         
         
         
-        
+        #MAP初期値
         img = Image.open('SKELD_MAP_half.png')
         bg_white = Image.new('RGB', img.size, (255,255,255))
         img = Image.blend(img, bg_white, 0.3)
+        
         self.tkimg = ImageTk.PhotoImage(img)
         self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
 
+        #各種ボタンの設定
         self.canvas.bind("<ButtonPress-1>", self.on_pressed) 
         self.canvas.bind("<B1-Motion>", self.on_dragged)
         self.canvas.bind("<ButtonPress-2>",self.click1) 
@@ -442,7 +519,7 @@ class Scribble:
         window.bind("<Control-c>", quit)
         self.canvas.focus_set()
         
-        
+        #色関連
         COLORS = ["white", "orange", "green", "yellow", 
         "purple", "blue", "red", "pink", "brown", 
         "black", "limegreen", "lightblue"]

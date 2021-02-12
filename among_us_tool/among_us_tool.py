@@ -280,7 +280,7 @@ class Scribble:
     def MIRAe(self):
         img = Image.open('MIRA_HQ_easy_half.png')
         bg_white = Image.new('RGB', img.size, (255,255,255))
-        img = Image.blend(img, bg_white, 0.3)
+        img = Image.blend(img, bg_white, 0.15)
 
         self.tkimg = ImageTk.PhotoImage(img)
         self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
@@ -288,10 +288,46 @@ class Scribble:
     def POLUSe(self):
         img = Image.open('POLUS_easy_half.png')
         bg_white = Image.new('RGB', img.size, (255,255,255))
-        img = Image.blend(img, bg_white, 0.3)
+        img = Image.blend(img, bg_white, 0.15)
 
         self.tkimg = ImageTk.PhotoImage(img)
         self.canvas.create_image(img_width / 2, img_height / 2 + blank, image= self.tkimg)
+
+    #推理キャンバスリセット
+    def vs(self):
+        self.VScanvas = tkinter.Canvas(self.VSflame, bg = "white", width = 137, height = 115)
+        self.VScanvas.place(x = 0, y = 0)
+        self.VScanvas.bind("<ButtonPress-3>",self.click3)
+        self.VScanvas.bind("<ButtonPress-2>",self.click6)
+        self.VScanvas.bind("<ButtonPress-1>",self.click9)
+    
+    def crew(self):
+        self.CREWcanvas = tkinter.Canvas(self.CREWflame, bg = "white", width = 137, height = 115)
+        self.CREWcanvas.place(x = 0, y = 0)
+        self.CREWcanvas.bind("<ButtonPress-3>",self.click4)
+        self.CREWcanvas.bind("<ButtonPress-2>",self.click7) 
+        self.CREWcanvas.bind("<ButtonPress-1>",self.click10)
+        
+    
+    def inposta(self):
+        self.INPcanvas = tkinter.Canvas(self.INPflame, bg = "white", width = 137, height = 115)
+        self.INPcanvas.place(x = 0, y = 0)
+        self.INPcanvas.bind("<ButtonPress-3>",self.click5) 
+        self.INPcanvas.bind("<ButtonPress-2>",self.click8)
+        self.INPcanvas.bind("<ButtonPress-1>",self.click11) 
+
+    def all(self):
+        self.vs()
+        self.crew()
+        self.inposta()
+        self.SKELD()
+        
+
+                
+         
+        
+
+
 
 
     
@@ -447,8 +483,22 @@ class Scribble:
                                  command = self.POLUSe, width = 20)
         polus_ea_button.place(x = 1200, y = 135, width = 70)
         
+        gray_button = tkinter.Button(window, text = "RESET",
+                                 command = self.vs, width = 20)
+        gray_button.place(x = 1080, y = 135+10, width = 70)
+        crew_button = tkinter.Button(window, text = "RESET",
+                                 command = self.crew, width = 20)
+        crew_button.place(x = 1080, y = 135+10+175, width = 70)
+        inposta_button = tkinter.Button(window, text = "RESET",
+                                 command = self.inposta, width = 20)
+        inposta_button.place(x = 1080, y = 135+10+350, width = 70)
+        all_button = tkinter.Button(window, text = "ALL RESET",
+                                 command = self.all, width = 20)
+        all_button.place(x = 1200, y = 135+30, width = 70)
         
         
+        
+        # グレー
         self.VSflame = tkinter.LabelFrame(window, text = "グレー", 
                                             labelanchor = "n", font = ("arial",15),
                                             bd = 5, relief=tkinter.RIDGE,bg = "white", cursor= "dot")
@@ -456,7 +506,7 @@ class Scribble:
         self.VScanvas = tkinter.Canvas(self.VSflame, bg = "white", width = 137, height = 115)
         self.VScanvas.place(x = 0, y = 0)
         
-        #CREW
+        #CREW置き
         self.CREWflame = tkinter.LabelFrame(window, text = "白置き", 
                                             labelanchor = "n", font = ("arial",15),
                                             bd = 5, relief=tkinter.RIDGE,bg = "white", cursor= "dot")
@@ -464,7 +514,7 @@ class Scribble:
         self.CREWcanvas = tkinter.Canvas(self.CREWflame, bg = "white", width = 137, height = 115)
         self.CREWcanvas.place(x = 0, y = 0)
         
-        #INPOSTA
+        #INPOSTA置き
         self.INPflame = tkinter.LabelFrame(window, text = "黒置き", 
                                             labelanchor = "n", font = ("arial",15),
                                             bd = 5, relief=tkinter.RIDGE,bg = "white", cursor= "dot")
@@ -531,7 +581,7 @@ class Scribble:
         self.death_flame = tkinter.LabelFrame(window, text = "死亡推定 (秒前)", 
                                             labelanchor = "n", font = ("arial",12),
                                             bd = 5, relief=tkinter.RIDGE,bg = "white")
-        self.death_flame.place(x = 1044, y = 510, width = 150, height = 75)
+        self.death_flame.place(x = 1044, y = 510+15, width = 150, height = 75)
          
         self.death_time = tkinter.Scale(self.death_flame, from_ = 1, to = 50, orient = tkinter.HORIZONTAL)
         self.death_time.set(5)
